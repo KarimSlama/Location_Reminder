@@ -29,22 +29,22 @@ fun <T> RecyclerView.setup(
     this.apply {
         layoutManager = LinearLayoutManager(this.context)
         this.adapter = adapter
-    }
-}
+    }//end apply
+}//end RecyclerView.setup()
 
 fun Fragment.setTitle(title: String) {
     if (activity is AppCompatActivity) {
         (activity as AppCompatActivity).supportActionBar?.title = title
-    }
-}
+    }//end if()
+}//end Fragment.setTitle()
 
 fun Fragment.setDisplayHomeAsUpEnabled(bool: Boolean) {
     if (activity is AppCompatActivity) {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(
             bool
         )
-    }
-}
+    }//end if()
+}//end Fragment.setDisplayHomeAsUpEnabled()
 
 //animate changing the view visibility
 fun View.fadeIn() {
@@ -53,9 +53,9 @@ fun View.fadeIn() {
     this.animate().alpha(1f).setListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator) {
             this@fadeIn.alpha = 1f
-        }
+        }//end onAnimationEnd
     })
-}
+}//end View.fadeIn()
 
 //animate changing the view visibility
 fun View.fadeOut() {
@@ -63,6 +63,6 @@ fun View.fadeOut() {
         override fun onAnimationEnd(animation: Animator) {
             this@fadeOut.alpha = 1f
             this@fadeOut.visibility = View.GONE
-        }
+        }//end onAnimationEnd()
     })
-}
+}//end View.fadeOut()

@@ -41,8 +41,8 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 class SaveReminderFragment : BaseFragment() {
-    //Get the view model this time as a single to be shared with the another fragment
-    override val _viewModel: SaveReminderViewModel by inject()
+    // get the viewModel to be shared with the other fragments
+    override val reminderViewModel: SaveReminderViewModel by inject()
     private lateinit var binding: FragmentSaveReminderBinding
     private val runningQOrLater = Build.VERSION.SDK_INT >=
             Build.VERSION_CODES.Q
@@ -64,7 +64,7 @@ class SaveReminderFragment : BaseFragment() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
-    }
+    }//end lazy
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,26 +75,26 @@ class SaveReminderFragment : BaseFragment() {
 
         setDisplayHomeAsUpEnabled(true)
 
-        binding.viewModel = _viewModel
+        binding.viewModel = reminderViewModel
         geofencingClient = LocationServices.getGeofencingClient(this.contxt as Activity)
 
         return binding.root
-    }
+    }//end onCreateView()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         binding.selectLocation.setOnClickListener {
-            _viewModel.navigationCommand.value =
+            reminderViewModel.navigationCommand.value =
                 NavigationCommand.To(SaveReminderFragmentDirections.actionSaveReminderFragmentToSelectLocationFragment())
-        }
+        }//end setOnClickListener
 
         binding.saveReminder.setOnClickListener {
-            title = _viewModel.reminderTitle.value
-            description = _viewModel.reminderDescription.value
-            location = _viewModel.reminderSelectedLocationStr.value
-            latitude = _viewModel.latitude.value
-            longitude = _viewModel.longitude.value
+            title = reminderViewModel.reminderTitle.value
+            description = reminderViewModel.reminderDescription.value
+            location = reminderViewModel.reminderSelectedLocationStr.value
+            latitude = reminderViewModel.latitude.value
+            longitude = reminderViewModel.longitude.value
             id = UUID.randomUUID().toString()
 
             if (
@@ -111,9 +111,9 @@ class SaveReminderFragment : BaseFragment() {
                     .show()
             } else {
                 checkPermissionsAndStartGeofencing()
-            }
-        }
-    }
+            }//end else
+        }//end setOnClickListener
+    }//end onViewCreated()
 
     private fun checkPermissionsAndStartGeofencing() {
         if (foregroundAndBackgroundLocationPermissionApproved()) {
@@ -126,27 +126,26 @@ class SaveReminderFragment : BaseFragment() {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
-        }
-    }
+        }//end else
+    }//end checkPermissionsAndStartGeofencing()
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TURN_DEVICE_LOCATION_ON) {
             checkDeviceLocationSettingsAndStartGeofence(false)
-        }
-    }
+        }//end if()
+    }//end onActivityResult()
 
     override fun onDestroy() {
         super.onDestroy()
-        //make sure to clear the view model after destroy, as it's a single view model.
-        _viewModel.onClear()
-    }
+        reminderViewModel.onClear()
+    }//end onDestroy()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         contxt = context
-    }
+    }//end onAttach()
 
     @TargetApi(29)
     private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
@@ -164,9 +163,9 @@ class SaveReminderFragment : BaseFragment() {
                         )
             } else {
                 true
-            }
+            }//end else
         return foregroundLocationApproved && backgroundPermissionApproved
-    }
+    }//end foregroundAndBackgroundLocationPermissionApproved()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     val requestPermissionLauncher =
@@ -235,7 +234,7 @@ class SaveReminderFragment : BaseFragment() {
                 addGeofence()
                 val reminderDataItem =
                     ReminderDataItem(title, description, location, latitude, longitude, id = id)
-                _viewModel.saveReminder(reminderDataItem)
+                reminderViewModel.saveReminder(reminderDataItem)
             }
         }
     }

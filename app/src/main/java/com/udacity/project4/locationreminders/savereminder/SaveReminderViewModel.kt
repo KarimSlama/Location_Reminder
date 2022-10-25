@@ -32,7 +32,7 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
         selectedPOI.value = null
         latitude.value = null
         longitude.value = null
-    }
+    }//end onClear()
 
     /**
      * Validate the entered data then saves the reminder data to the DataSource
@@ -40,15 +40,15 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
     fun validateAndSaveReminder(reminderData: ReminderDataItem) {
         if (validateEnteredData(reminderData)) {
             saveReminder(reminderData)
-        }
-    }
+        }//end if()
+    }//end validateAndSaveReminder()
 
     fun onLocationSelected(selectedLocation: LatLng, selectedLocationDescription: String?) {
         latitude.value = selectedLocation.latitude
         longitude.value = selectedLocation.longitude
         reminderSelectedLocationStr.value = selectedLocationDescription
         navigationCommand.value = NavigationCommand.Back
-    }
+    }//end onLocationSelected()
 
     /**
      * Save the reminder to the data source
@@ -69,8 +69,8 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
             showLoading.value = false
             showToast.value = app.getString(R.string.reminder_saved)
             navigationCommand.value = NavigationCommand.Back
-        }
-    }
+        }//end launch
+    }//end saveReminder()
 
     /**
      * Validate the entered data and show error to the user if there's any invalid data
@@ -79,12 +79,12 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
         if (reminderData.title.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_enter_title
             return false
-        }
+        }//end if()
 
         if (reminderData.location.isNullOrEmpty()) {
             showSnackBarInt.value = R.string.err_select_location
             return false
-        }
+        }//end if()
         return true
-    }
-}
+    }//end validateEnteredData()
+}//end class

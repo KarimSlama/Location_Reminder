@@ -3,7 +3,6 @@ package com.udacity.project4.locationreminders.data.local
 import android.content.Context
 import androidx.room.Room
 
-
 /**
  * Singleton class that is used to create a reminder db
  */

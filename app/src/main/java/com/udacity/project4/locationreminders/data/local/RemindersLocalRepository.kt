@@ -64,9 +64,8 @@ class RemindersLocalRepository(
         }//end wrapEspressoIdlingResource
     }//end withContext()
 
-    /**
-     * Deletes all the reminders in the db
-     */
+
+    // Deletes all the reminders in the db
     override suspend fun deleteAllReminders() {
         wrapEspressoIdlingResource {
             withContext(ioDispatcher) {

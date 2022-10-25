@@ -31,11 +31,6 @@ android {
         returnDefaultValues = true
     }
 
-    //dataBinding {
-    //    enabled = true
-    //    enabledForTests = true
-    //}
-
     buildFeatures {
         dataBinding true
         viewBinding true

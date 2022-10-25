@@ -18,8 +18,8 @@ class ReminderDescriptionActivity : AppCompatActivity() {
             val intent = Intent(context, ReminderDescriptionActivity::class.java)
             intent.putExtra(EXTRA_ReminderDataItem, reminderDataItem)
             return intent
-        }
-    }
+        }//end newIntent()
+    }//end companion object
 
     private lateinit var binding: ActivityReminderDescriptionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,5 +30,5 @@ class ReminderDescriptionActivity : AppCompatActivity() {
         )
         binding.reminderItem =
             intent.getSerializableExtra(EXTRA_ReminderDataItem) as ReminderDataItem
-    }
-}
+    }//end onCreate()
+}//end class

@@ -27,7 +27,7 @@ class FirebaseUserLiveData : LiveData<FirebaseUser?>() {
         value = firebaseAuth.currentUser
     }//end FirebaseAuth
 
-    //to observe firebaseAuth state to see what is the currently object logged in
+    //to observe firebaseAuthentication state to see what the currently object is logged in
     override fun onActive() {
         firebase.addAuthStateListener(authStateListener)
     }//end onActive()

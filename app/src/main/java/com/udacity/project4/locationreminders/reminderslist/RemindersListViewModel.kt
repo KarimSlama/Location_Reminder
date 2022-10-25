@@ -22,14 +22,14 @@ class RemindersListViewModel(
     fun getReminders() {
         showLoading.value = true
         viewModelScope.launch {
-            //interacting with the dataSource has to be through a coroutine
+            // to interact with the dataSource to be through a coroutine
             val result = dataSource.getReminders()
             showLoading.postValue(false)
             when (result) {
                 is Result.Success<*> -> {
                     val dataList = ArrayList<ReminderDataItem>()
                     dataList.addAll((result.data as List<ReminderDTO>).map { reminder ->
-                        //map the reminder data from the DB to the be ready to be displayed on the UI
+                        //map the reminder data from the DB to be ready for displayed it on the UI
                         ReminderDataItem(
                             reminder.title,
                             reminder.description,

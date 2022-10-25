@@ -19,9 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.udacity.project4.R
-import com.udacity.project4.authentication.AuthenticationActivity.Companion.TAG
 import com.udacity.project4.base.BaseFragment
-import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.databinding.FragmentSelectLocationBinding
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
 import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
@@ -31,7 +29,7 @@ import java.util.*
 class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     //Use Koin to get the view model of the SaveReminder
-    override val _viewModel: SaveReminderViewModel by inject()
+    override val reminderViewModel: SaveReminderViewModel by inject()
     private lateinit var map: GoogleMap
     private var selectedLocation: LatLng = LatLng(-33.852, 151.211)
     private var selectedLocationDescription: String? = null
@@ -43,7 +41,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_select_location, container, false)
 
-        binding.viewModel = _viewModel
+        binding.viewModel = reminderViewModel
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -54,7 +52,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         binding.saveReminderLocationButton.setOnClickListener {
-            _viewModel.onLocationSelected(selectedLocation, selectedLocationDescription)
+            reminderViewModel.onLocationSelected(selectedLocation, selectedLocationDescription)
         }
 
         return binding.root
@@ -108,8 +106,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun setMapStyle(map: GoogleMap) {
         try {
-            // Customize the styling of the base map using a JSON object defined
-            // in a raw resource file.
+            // Customize the styling of the base map using a JSON object defined in a raw resource file.
             val success = map.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                     requireContext(),
@@ -118,8 +115,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             )
         } catch (e: Resources.NotFoundException) {
             e.message
-        }
-    }
+        }//end catch()
+    }//end setMapStyle()
 
     private fun isPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -168,10 +165,14 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             }
         }
 
-    @Deprecated("Deprecated")
+    @Deprecated("Deprecated", ReplaceWith(
+        "inflater.inflate(R.menu.map_options, menu)",
+        "com.udacity.project4.R"
+    )
+    )
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.map_options, menu)
-    }//end onCraeteOptionsMenu()
+    }//end onCreateOptionsMenu()
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

@@ -48,13 +48,13 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
             val requestId = it.requestId
 
             val remindersRepository: ReminderDataSource by inject()
-            //Interaction to the repository has to be through a coroutine scope
+            // to interact with the repository to be through the coroutine scope
             CoroutineScope(coroutineContext).launch(SupervisorJob()) {
-                //get the reminder with the request id
+                //get the reminder by the request id
                 val result = remindersRepository.getReminder(requestId)
                 if (result is Result.Success<ReminderDTO>) {
                     val reminderDTO = result.data
-                    //send a notification to the user with the reminder details
+                    //to set the user up to date by sending a notification to it with location details
                     sendNotification(
                         this@GeofenceTransitionsJobIntentService, ReminderDataItem(
                             reminderDTO.title,

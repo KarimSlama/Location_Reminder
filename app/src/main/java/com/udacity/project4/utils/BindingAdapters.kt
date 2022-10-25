@@ -20,9 +20,9 @@ object BindingAdapters {
             (recyclerView.adapter as? BaseRecyclerViewAdapter<T>)?.apply {
                 clear()
                 addData(itemList)
-            }
-        }
-    }
+            }//end apply
+        }//end let
+    }//end setRecyclerViewData()
 
     /**
      * Use this binding adapter to show and hide the views using boolean variables
@@ -41,7 +41,7 @@ object BindingAdapters {
             } else {
                 if (view.visibility == View.VISIBLE)
                     view.fadeOut()
-            }
-        }
-    }
-}
+            }//end else
+        }//end else
+    }//end setFadeVisible()
+}//end object

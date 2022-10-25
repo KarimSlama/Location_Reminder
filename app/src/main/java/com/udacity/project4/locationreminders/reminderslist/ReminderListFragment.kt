@@ -20,9 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReminderListFragment : BaseFragment() {
     //use Koin to retrieve the ViewModel instance
-    override val _viewModel: RemindersListViewModel by viewModel()
+    override val reminderViewModel: RemindersListViewModel by viewModel()
     private lateinit var binding: FragmentRemindersBinding
-    private val viewModel by viewModels<LoginViewModel>()
+    private val loginViewModel by viewModels<LoginViewModel>()
     private val runningQor = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
 
     override fun onCreateView(
@@ -31,13 +31,13 @@ class ReminderListFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_reminders, container, false
         )
-        binding.viewModel = _viewModel
+        binding.viewModel = reminderViewModel
 
         setHasOptionsMenu(true)
         setDisplayHomeAsUpEnabled(false)
         setTitle(getString(R.string.app_name))
 
-        binding.refreshLayout.setOnRefreshListener { _viewModel.getReminders() }
+        binding.refreshLayout.setOnRefreshListener { reminderViewModel.getReminders() }
 
         return binding.root
     }//end onCreateView()
@@ -54,12 +54,12 @@ class ReminderListFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         //load the reminders list on the ui
-        _viewModel.getReminders()
+        reminderViewModel.getReminders()
     }//end onResume()
 
     private fun navigateToAddReminder() {
         //use the navigationCommand live data to navigate between the fragments
-        _viewModel.navigationCommand.postValue(
+        reminderViewModel.navigationCommand.postValue(
             NavigationCommand.To(
                 ReminderListFragmentDirections.toSaveReminder()
             )
@@ -74,7 +74,7 @@ class ReminderListFragment : BaseFragment() {
     private fun setupRecyclerView() {
         val adapter = RemindersListAdapter {}
 
-//        setup the recycler view using the extension function
+        // setup the recycler view using the extension function
         binding.reminderssRecyclerView.setup(adapter)
     }//end setup()
 
@@ -87,7 +87,7 @@ class ReminderListFragment : BaseFragment() {
         when (item.itemId) {
             R.id.logout -> {
                 // adding layout impelementation
-                viewModel.authenticationState.observe(viewLifecycleOwner,
+                loginViewModel.authenticationState.observe(viewLifecycleOwner,
                     Observer { authenticationState ->
                         when (authenticationState) {
                             LoginViewModel.AuthenticationState.AUTHENTICATED -> {
@@ -95,9 +95,9 @@ class ReminderListFragment : BaseFragment() {
                                 navigateBack()
                             }
                             else -> {}
-                        }
+                        }//end when()
                     })
-            }
+            }//end excep.
         }//end when()
         return super.onOptionsItemSelected(item)
     }//end onOptionsItemSelected()

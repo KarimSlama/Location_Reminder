@@ -29,7 +29,7 @@ fun sendNotification(context: Context, reminderDataItem: ReminderDataItem) {
             NotificationManager.IMPORTANCE_DEFAULT
         )
         notificationManager.createNotificationChannel(channel)
-    }
+    }//end if()
 
     val intent = ReminderDescriptionActivity.newIntent(context.applicationContext, reminderDataItem)
 
@@ -50,6 +50,6 @@ fun sendNotification(context: Context, reminderDataItem: ReminderDataItem) {
         .build()
 
     notificationManager.notify(getUniqueId(), notification)
-}
+}//end sendNotification()
 
 private fun getUniqueId() = ((System.currentTimeMillis() % 10000).toInt())
