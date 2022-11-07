@@ -1,24 +1,23 @@
 package com.udacity.project4.utils
 
 import androidx.test.espresso.idling.CountingIdlingResource
+import com.udacity.project4.Constants.RESOURCES
 
 object EspressoIdlingResource {
-
-    private const val RESOURCES = "GLOBAL"
 
     @JvmField
     val countingIdlingResource = CountingIdlingResource(RESOURCES)
 
     fun increment() {
         countingIdlingResource.increment()
-    }
+    }//end increment()
 
     fun decrement() {
         if (!countingIdlingResource.isIdleNow) {
             countingIdlingResource.decrement()
-        }
-    }
-}
+        }//end if()
+    }//end decrement()
+}//end object
 
 inline fun <T> wrapEspressoIdlingResource(function: () -> T): T {
     EspressoIdlingResource.increment() // Set app as busy.
@@ -26,5 +25,5 @@ inline fun <T> wrapEspressoIdlingResource(function: () -> T): T {
         function()
     } finally {
         EspressoIdlingResource.decrement() // Set app as idle.
-    }
-}
+    }//end finally
+}//end wrapEspressoIdlingResource()

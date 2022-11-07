@@ -21,6 +21,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.udacity.project4.Constants.TAG
 
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -68,9 +69,4 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     fun call() {
         value = null
     }//end call()
-
-    companion object {
-
-        private val TAG = "SingleLiveEvent"
-    }//end companion object
 }//end class

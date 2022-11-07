@@ -28,6 +28,10 @@ import com.google.android.gms.location.Geofence.NEVER_EXPIRE
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.udacity.project4.BuildConfig
+import com.udacity.project4.Constants.BACKGROUND_LOCATION_PERMISSION_INDEX
+import com.udacity.project4.Constants.LOCATION_PERMISSION_INDEX
+import com.udacity.project4.Constants.REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE
+import com.udacity.project4.Constants.REQUEST_TURN_DEVICE_LOCATION_ON
 import com.udacity.project4.R
 import com.udacity.project4.authentication.AuthenticationActivity.Companion.TAG
 import com.udacity.project4.base.BaseFragment
@@ -41,7 +45,7 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 class SaveReminderFragment : BaseFragment() {
-    // get the viewModel to be shared with the other fragments
+    // get the view model this time as a single to be shared with the another fragment
     override val reminderViewModel: SaveReminderViewModel by inject()
     private lateinit var binding: FragmentSaveReminderBinding
     private val runningQOrLater = Build.VERSION.SDK_INT >=
@@ -139,6 +143,7 @@ class SaveReminderFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        //make sure to clear the view model after destroy, as it's a single view model.
         reminderViewModel.onClear()
     }//end onDestroy()
 
@@ -311,8 +316,3 @@ class SaveReminderFragment : BaseFragment() {
         }//end run
     }//end addGeofence()
 }//end class
-
-private const val LOCATION_PERMISSION_INDEX = 0
-private const val REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE = 33
-private const val BACKGROUND_LOCATION_PERMISSION_INDEX = 1
-private const val REQUEST_TURN_DEVICE_LOCATION_ON = 29

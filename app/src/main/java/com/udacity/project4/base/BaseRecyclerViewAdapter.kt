@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Unit)? = null) :
     RecyclerView.Adapter<DataBindingViewHolder<T>>() {
 
-    private var _items: MutableList<T> = mutableListOf()
+    private var _itemsDataList: MutableList<T> = mutableListOf()
 
     /**
      * Returns the _items data
      */
-    private val items: List<T>
-        get() = this._items
+    private val itemsDataList: List<T>
+        get() = this._itemsDataList
 
-    override fun getItemCount() = _items.size
+    override fun getItemCount() = _itemsDataList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -40,17 +40,18 @@ abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Un
         }//end setOnClickListener
     }//end onBindViewHolder()
 
-    private fun getItem(position: Int) = _items[position]
+    //Add data to the actual Dataset
+    private fun getItem(position: Int) = _itemsDataList[position]
 
     // to add the data to the database
     fun addData(data: List<T>) {
-        _items.addAll(data)
+        _itemsDataList.addAll(data)
         notifyDataSetChanged()
     }//end addData()
 
     // to clear the data
     fun clear() {
-        _items.clear()
+        _itemsDataList.clear()
         notifyDataSetChanged()
     }//end clear()
 

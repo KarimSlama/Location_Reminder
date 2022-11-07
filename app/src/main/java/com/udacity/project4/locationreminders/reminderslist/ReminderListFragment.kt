@@ -18,6 +18,7 @@ import com.udacity.project4.utils.setTitle
 import com.udacity.project4.utils.setup
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@Suppress("DEPRECATION")
 class ReminderListFragment : BaseFragment() {
     //use Koin to retrieve the ViewModel instance
     override val reminderViewModel: RemindersListViewModel by viewModel()
@@ -86,7 +87,7 @@ class ReminderListFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
-                // adding layout impelementation
+                // adding logout implementation
                 loginViewModel.authenticationState.observe(viewLifecycleOwner,
                     Observer { authenticationState ->
                         when (authenticationState) {
@@ -97,7 +98,7 @@ class ReminderListFragment : BaseFragment() {
                             else -> {}
                         }//end when()
                     })
-            }//end excep.
+            }//end except.
         }//end when()
         return super.onOptionsItemSelected(item)
     }//end onOptionsItemSelected()

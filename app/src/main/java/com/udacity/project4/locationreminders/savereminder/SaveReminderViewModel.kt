@@ -18,7 +18,7 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
     val reminderTitle = MutableLiveData<String?>()
     val reminderDescription = MutableLiveData<String?>()
     val reminderSelectedLocationStr = MutableLiveData<String?>()
-    val selectedPOI = MutableLiveData<PointOfInterest?>()
+    private val selectedPOI = MutableLiveData<PointOfInterest?>()
     val latitude = MutableLiveData<Double?>()
     val longitude = MutableLiveData<Double?>()
 
@@ -77,12 +77,12 @@ class SaveReminderViewModel(val app: Application, val dataSource: ReminderDataSo
      */
     fun validateEnteredData(reminderData: ReminderDataItem): Boolean {
         if (reminderData.title.isNullOrEmpty()) {
-            showSnackBarInt.value = R.string.err_enter_title
+            showSnackBarInt.value = R.string.enter_title_error
             return false
         }//end if()
 
         if (reminderData.location.isNullOrEmpty()) {
-            showSnackBarInt.value = R.string.err_select_location
+            showSnackBarInt.value = R.string.select_location_error
             return false
         }//end if()
         return true

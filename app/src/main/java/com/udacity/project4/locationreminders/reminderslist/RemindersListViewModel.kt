@@ -22,7 +22,7 @@ class RemindersListViewModel(
     fun getReminders() {
         showLoading.value = true
         viewModelScope.launch {
-            // to interact with the dataSource to be through a coroutine
+            //interacting with the dataSource has to be through a coroutine
             val result = dataSource.getReminders()
             showLoading.postValue(false)
             when (result) {

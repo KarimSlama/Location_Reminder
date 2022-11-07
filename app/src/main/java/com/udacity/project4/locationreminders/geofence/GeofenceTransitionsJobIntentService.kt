@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
+@Suppress("DEPRECATION")
 class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
 
     private var coroutineJob: Job = Job()
@@ -23,6 +24,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
     companion object {
         private const val JOB_ID = 400
 
+        // call this to start the JobIntentService to handle the geofencing transition events
         fun enqueueWork(context: Context, intent: Intent) {
             enqueueWork(
                 context,
@@ -33,6 +35,8 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
     }//end companion object
 
     override fun onHandleWork(intent: Intent) {
+        // to handle the geofencing transition events and send a notification to the user when he enters the geofence area
+        //TODO call @sendNotification
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
         if (geofencingEvent.hasError()) {
             return
@@ -42,16 +46,16 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
         }//end if()
     }//end onHandleWork
 
+    // to get the request id of the current geofence
     private fun sendNotification(triggeringGeofence: List<Geofence>) {
-
         triggeringGeofence.forEach {
             val requestId = it.requestId
-
-            val remindersRepository: ReminderDataSource by inject()
-            // to interact with the repository to be through the coroutine scope
+            // to get the local repository instance
+            val remindersLocalRepository: ReminderDataSource by inject()
+            // interaction to the repository has to be through a coroutine scope
             CoroutineScope(coroutineContext).launch(SupervisorJob()) {
                 //get the reminder by the request id
-                val result = remindersRepository.getReminder(requestId)
+                val result = remindersLocalRepository.getReminder(requestId)
                 if (result is Result.Success<ReminderDTO>) {
                     val reminderDTO = result.data
                     //to set the user up to date by sending a notification to it with location details

@@ -53,10 +53,10 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
         binding.saveReminderLocationButton.setOnClickListener {
             reminderViewModel.onLocationSelected(selectedLocation, selectedLocationDescription)
-        }
+        }//end setOnClickListener()
 
         return binding.root
-    }
+    }//end onCreateView()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onMapReady(googleMap: GoogleMap) {
@@ -66,7 +66,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         setMapLongClick(map)
         setPoiClick(map)
         enableMyLocation()
-    }
+    }//end onMapReady()
 
     private fun setMapLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
@@ -88,8 +88,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
             selectedLocation = latLng
             selectedLocationDescription = "Custom location"
-        }
-    }
+        }//end map()
+    }//end setMapLongClick()
 
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->
@@ -101,8 +101,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             poiMarker?.showInfoWindow()
             selectedLocation = poi.latLng
             selectedLocationDescription = poiMarker?.title
-        }
-    }
+        }//end map()
+    }//end setPoiClick()
 
     private fun setMapStyle(map: GoogleMap) {
         try {
@@ -123,7 +123,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
-    }
+    }//end isPermissionGranted()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("MissingPermission")
@@ -138,8 +138,8 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
-        }
-    }
+        }//end else
+    }//end enableMyLocation
 
     @RequiresApi(Build.VERSION_CODES.Q)
     val requestPermissionLauncher =
@@ -162,13 +162,14 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-            }
+            }//end when()
         }
 
-    @Deprecated("Deprecated", ReplaceWith(
-        "inflater.inflate(R.menu.map_options, menu)",
-        "com.udacity.project4.R"
-    )
+    @Deprecated(
+        "Deprecated", ReplaceWith(
+            "inflater.inflate(R.menu.map_options, menu)",
+            "com.udacity.project4.R"
+        )
     )
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.map_options, menu)
@@ -176,6 +177,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        //change the map type based on the user's selection.
         R.id.normal_map -> {
             map.mapType = GoogleMap.MAP_TYPE_NORMAL
             true

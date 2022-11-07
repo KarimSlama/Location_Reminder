@@ -7,6 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.udacity.project4.R
 import kotlinx.android.synthetic.main.activity_reminders.*
 
+/**
+ * The RemindersActivity that holds the reminders fragments
+ */
 class RemindersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +22,7 @@ class RemindersActivity : AppCompatActivity() {
             android.R.id.home -> {
                 (nav_host_fragment as NavHostFragment).navController.popBackStack()
                 return true
-            }//end excep.
+            }//end except.
         }//end when()
         return super.onOptionsItemSelected(item)
     }//end onOptionsItemSelected()
